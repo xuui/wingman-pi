@@ -9,7 +9,8 @@
 </head>
 <body>
 <script>
-var socket=io.connect('http://localhost:8088');
+//var socket=io.connect('http://10.0.117.33:8088');
+var socket=io();
 socket.on('shell',function(data){
   console.log(data.out);
   document.write('<pre>'+data.out+'</pre>');
@@ -20,5 +21,14 @@ socket.on('news',function(data){
   socket.emit('shell',{shell:'dir /w'});
 });
 </script>
+
+uname -a //系统信息
+uptime //开机时间
+free -h //内存情况
+
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+cat /sys/class/thermal/thermal_zone0/temp
+cat /proc/cpuinfo // 查看 CPU 信息
+
 </body>
 </html>
