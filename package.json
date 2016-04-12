@@ -1,0 +1,27 @@
+{
+  "name": "wingman-pi",
+  "version": "0.0.1",
+  "description": "Wingman Raspberry Pi",
+  "main": "service.js",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node service.js",
+    "start": "node service.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuui/wingman-pi.git"
+  },
+  "keywords": [
+    "wingman"
+  ],
+  "author": "Xu.hel",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/xuui/wingman-pi/issues"
+  },
+  "homepage": "https://github.com/xuui/wingman-pi#readme"
+}
