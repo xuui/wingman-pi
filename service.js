@@ -11,4 +11,8 @@ io.on('connection',function(socket){
       if(error!==null){console.log(`exec error: ${error}`);}
     });
   });
+  socket.emit('news',{hello:'world'});
+  socket.on('event',function(data){
+    console.log(data);
+  });
 });
