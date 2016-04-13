@@ -1,3 +1,4 @@
+/* Socket.io */
 //var socket=io.connect('http://10.0.117.33:8088');
 var socket=io();
 socket.on('connect',function(){
@@ -14,7 +15,7 @@ socket.on('connect',function(){
     socket.emit('Terminal',{shell:'ls -l'});
   });
 });
-/* Socket end */
+/* Socket.io End */
 
 window.onload=function(){
   var upFiles=document.querySelector('#upFiles');

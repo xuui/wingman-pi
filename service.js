@@ -9,11 +9,13 @@ var port=process.env.PORT || 80;
 //var io=require('socket.io')(8088);
 var exec=require('child_process').exec;
 
-server.listen(port,function(){
-  console.log('Wingman-Pi listening at port %d',port);
-});
+/* Express */
+server.listen(port,function(){console.log('Wingman-Pi listening at port %d',port);});
 app.use(express.static(__dirname+'/publics'));
 
+/* Express End */
+
+/* Socket.io */
 io.on('connection',function(socket){
   socket.on('image',function(data){
     socket.broadcast.emit('image',{file:data.file,image:data.image});
@@ -32,3 +34,4 @@ io.on('connection',function(socket){
     console.log(data);
   });
 });
+/* Socket.io End */
