@@ -11,21 +11,9 @@
 <title>Wingman Pi</title>
 <link rel="shortcut icon" type="image/x-icon" href="icons/favicon.ico">
 <script src="scripts/socket.io.js"></script>
+<script src="scripts/script.js"></script>
 </head>
 <body>
-<script>
-//var socket=io.connect('http://10.0.117.33:8088');
-var socket=io();
-socket.on('shell',function(data){
-  console.log(data.out);
-  document.write('<pre>'+data.out+'</pre>');
-});
-socket.on('news',function(data){
-  console.log(data);
-  socket.emit('event',{my:'data'});
-  socket.emit('shell',{shell:'dir /w'});
-});
-</script>
 
 <!--
 uname -a //系统信息
