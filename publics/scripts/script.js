@@ -5,14 +5,9 @@ socket.on('connect',function(){
   socket.on('image',function(data){
     imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
   });
-  socket.on('Terminal',function(data){
-    console.log(data.out);
-    imgPreview.innerHTML='<pre>'+data.out+'</pre>';
-  });
   socket.on('news',function(data){
     console.log(data);
     socket.emit('event',{my:'data'});
-    socket.emit('Terminal',{shell:'ls -l'});
   });
 });
 /* Socket.io End */
