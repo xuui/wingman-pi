@@ -16,6 +16,12 @@ app.use(express.static(__dirname+'/publics'));
 /* Express End */
 
 /* Socket.io */
+
+/* Chat.dot */
+var usernames={};
+var numUsers=0;
+/* Chat.dot End */
+
 io.on('connection',function(socket){
   socket.on('image',function(data){
     socket.broadcast.emit('image',{file:data.file,image:data.image});
@@ -33,5 +39,35 @@ io.on('connection',function(socket){
   socket.on('event',function(data){
     console.log(data);
   });
+  
+  /* Chat.dot */
+  var addedUser=false;
+  socket.on('Message',function(data){
+    socket.broadcast.emit('Message',{username:socket.username,message:data});
+  });
+  socket.on('add user',function(username){
+    //console.log('login user: '+ username);
+    socket.username=username;
+    usernames[username]=username;
+    ++numUsers;
+    addedUser=true;
+    socket.emit('login',{numUsers:numUsers});
+    console.log('login user: '+ username);
+    socket.broadcast.emit('user joined',{
+      username:socket.username,
+      numUsers:numUsers
+    });
+  });
+  socket.on('disconnect',function(){
+    if(addedUser){
+      delete usernames[socket.username];
+      --numUsers;
+      socket.broadcast.emit('user left',{
+        username:socket.username,
+        numUsers:numUsers
+      });
+    }
+  });  
+  /* Chat.dot End */
 });
 /* Socket.io End */

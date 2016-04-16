@@ -11,6 +11,7 @@
 <title>Wingman Pi</title>
 <link rel="shortcut icon" type="image/x-icon" href="icons/favicon.ico">
 <script src="scripts/socket.io.js"></script>
+<script src="scripts/jquery.js"></script>
 <script src="scripts/script.js"></script>
 </head>
 <body>
@@ -24,7 +25,16 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
 cat /sys/class/thermal/thermal_zone0/temp
 cat /proc/cpuinfo // 查看 CPU 信息
 -->
-<input type="file" name="upFiles" id="upFiles">
+<div>
+  <p><input type="text" id="inputName"></p>
+  <p><input type="text" id="inputMsg"></p>
+  <div id="chatlog">
+      <div></div>
+      <ul class="messages"></ul>
+  </div>
+</div>
+<hr>
+<p><input type="file" name="upFiles" id="upFiles"></p>
 <div id="imgPreview"></div>
 
 </body>
