@@ -3,8 +3,8 @@ var username;
 var connected=false;
 var $inputName=$('#inputName');
 var $inputMessage=$('#inputMsg');
-var $messages = $('.messages');
-var FADE_TIME = 150;
+var $messages=$('.messages');
+var FADE_TIME=150;
 var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
   '#1976d2','#0288d1','#00838f','#388e3c','#558b2f',
   '#ff6f00','#e65100','#f4511e','#546e7a'];
@@ -53,7 +53,6 @@ socket.on('user left',function(data){
 $inputName.keydown(function(e){ //input Name
   if(e.which===13){setUsername();}
 });
-
 
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
