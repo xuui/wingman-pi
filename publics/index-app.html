@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="renderer" content="webkit">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Wingman Pi</title>
+<link rel="shortcut icon" type="image/x-icon" href="icons/favicon.ico">
+<script src="scripts/socket.io.js"></script>
+<script src="scripts/jquery.js"></script>
+<script src="scripts/script-app.js"></script>
+</head>
+<body>
+
+<!--
+uname -a //系统信息
+uptime //开机时间
+free -h //内存情况
+
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+cat /sys/class/thermal/thermal_zone0/temp
+cat /proc/cpuinfo // 查看 CPU 信息
+-->
+<div>
+  <p><input type="text" id="inputName" placeholder="请输入名字"></p>
+  <p><input type="text" id="inputMsg" placeholder="说点什么吧"></p>
+  <div id="chatlog">
+      <div></div>
+      <ul class="messages"></ul>
+  </div>
+</div>
+<hr>
+<p><input type="file" name="upFiles" id="upFiles"></p>
+<div id="imgPreview"></div>
+
+</body>
+</html>
