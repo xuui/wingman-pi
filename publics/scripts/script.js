@@ -98,7 +98,12 @@ function addMessageElement(el,options){
 function addChatMessage(data,options){
   options=options||{};
   var $usernameDiv=$('<span class="username"/>').text('['+data.username+']: ').css('color',getUsernameColor(data.username));
-  var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
+  var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
+  if($messageUrl==0){
+    var $messageBodyDiv=$('<span class="messageBody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
+  }else{
+    var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
+  }
   var $messageDiv=$('<li class="message"/>').data('username',data.username).append($usernameDiv,$messageBodyDiv);
   addMessageElement($messageDiv,options);
 }
