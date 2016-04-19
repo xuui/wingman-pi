@@ -9,6 +9,7 @@ html{
   font-family:sans-serif;
   -ms-text-size-adjust:100%;
   -webkit-text-size-adjust:100%;
+  -webkit-font-smoothing:antialiased;
 }
 body{
   margin:0;
@@ -75,6 +76,7 @@ sup{
 }
 img{
   border-style:none;
+  max-width:100%;
 }
 svg:not(:root){
   overflow:hidden;
@@ -129,6 +131,8 @@ legend{
 }
 textarea{
   overflow:auto;
+  vertical-align:top;
+  resize:vertical;
 }
 [type="checkbox"],[type="radio"]{
   box-sizing:border-box;
@@ -151,4 +155,16 @@ textarea{
 ::-webkit-file-upload-button{
   -webkit-appearance:button;
   font:inherit;
+}
+*,
+*:before,
+*:after{
+ -moz-box-sizing:border-box;
+ -webkit-box-sizing:border-box;
+ box-sizing:border-box;
+}
+body{
+  font-family:'Segoe UI','Lucida Grande',Helvetica,Arial,'Microsoft YaHei',FreeSans,Arimo,'Droid Sans','wenquanyi micro hei','Hiragino Sans GB','Hiragino Sans GB W3',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
