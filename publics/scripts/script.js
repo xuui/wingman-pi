@@ -134,8 +134,8 @@ function readFile(){
   imgPreview.innerHTML='';
   for(var i=0,l=files.length;i<l;i++){
     //console.log(files[i]);
-    if(files[i].size/1024 >2048){
-      imgPreview.innerHTML='文件不能大于 2M';
+    if(files[i].size/1024 >10248){
+      imgPreview.innerHTML='文件不能大于 10M';
       return false;
     }
     if(!/image\/\w+/.test(files[i].type)){
