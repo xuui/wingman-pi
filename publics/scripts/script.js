@@ -101,6 +101,9 @@ function addChatMessage(data,options){
   var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
   if($messageUrl==0){
     var $messageBodyDiv=$('<span class="messageBody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
+    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
+    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
+    
   }else{
     var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
   }
@@ -134,6 +137,7 @@ function readFile(){
   imgPreview.innerHTML='';
   for(var i=0,l=files.length;i<l;i++){
     //console.log(files[i]);
+    console.log(files[i].type);
     if(files[i].size/1024 >10248){
       imgPreview.innerHTML='文件不能大于 10M';
       return false;
