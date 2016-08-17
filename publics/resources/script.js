@@ -121,6 +121,9 @@ function getUsernameColor(username){
 // Chat.function End
 /* Chat.dot End */
 
+
+new notify('Wingman Pi','您总共有3封未读邮件。');
+
 window.onload=function(){
   var upFiles=document.querySelector('#upFiles');
   var imgPreview=$('#imgPreview');
