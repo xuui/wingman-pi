@@ -11,19 +11,23 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
 
 /* Socket.io */
 var socket=io();
-//var socket=io.connect('http://10.0.117.33:8088');
+//var socket=io.connect('http://10.0.117.33');
 socket.on('image',function(data){
   imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
 });
 socket.on('Terminal',function(data){
   console.log(data.out);
   imgPreview.innerHTML='<pre>'+data.out+'</pre>';
+  var notinfo=data.out.split(', ')
+  send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
+/*
 socket.on('news',function(data){
   console.log(data);
+});
+*/
   socket.emit('event',{my:'data'});
   socket.emit('Terminal',{shell:'uptime'});
-});
 
 // Chat.io
 socket.on('login',function(data){
@@ -121,9 +125,6 @@ function getUsernameColor(username){
 // Chat.function End
 /* Chat.dot End */
 
-
-new notify('Wingman Pi','您总共有3封未读邮件。');
-
 window.onload=function(){
   var upFiles=document.querySelector('#upFiles');
   var imgPreview=$('#imgPreview');
@@ -160,5 +161,7 @@ function readFile(){
     }
   }
 }
-
+function send_notify(body){
+  new notify('Wingman Pi',body);
+}
 });

@@ -10,20 +10,24 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
   '#ff6f00','#e65100','#f4511e','#546e7a'];
 
 /* Socket.io */
-var socket=io('http://xuui.xyz');
-//var socket=io.connect('http://10.0.117.33:8088');
+//var socket=io();
+var socket=io.connect('http://10.0.117.33');
 socket.on('image',function(data){
   imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
 });
 socket.on('Terminal',function(data){
   console.log(data.out);
   imgPreview.innerHTML='<pre>'+data.out+'</pre>';
+  var notinfo=data.out.split(', ')
+  send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
+/*
 socket.on('news',function(data){
   console.log(data);
+});
+*/
   socket.emit('event',{my:'data'});
   socket.emit('Terminal',{shell:'uptime'});
-});
 
 // Chat.io
 socket.on('login',function(data){
@@ -101,6 +105,9 @@ function addChatMessage(data,options){
   var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
   if($messageUrl==0){
     var $messageBodyDiv=$('<span class="messageBody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
+    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
+    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
+    
   }else{
     var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
   }
@@ -134,6 +141,7 @@ function readFile(){
   imgPreview.innerHTML='';
   for(var i=0,l=files.length;i<l;i++){
     //console.log(files[i]);
+    console.log(files[i].type);
     if(files[i].size/1024 >10248){
       imgPreview.innerHTML='文件不能大于 10M';
       return false;
@@ -153,5 +161,7 @@ function readFile(){
     }
   }
 }
-
+function send_notify(body){
+  new notify('Wingman Pi',body);
+}
 });
