@@ -12,45 +12,47 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
 /* Socket.io */
 var socket=io();
 //var socket=io.connect('http://10.0.117.33');
-socket.on('image',function(data){
-  imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
-});
-socket.on('Terminal',function(data){
-  console.log(data.out);
-  imgPreview.innerHTML='<pre>'+data.out+'</pre>';
-  var notinfo=data.out.split(', ')
-  send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
-});
-/*
-socket.on('news',function(data){
-  console.log(data);
-});
-*/
-  socket.emit('event',{my:'data'});
+socket.on('connection',function (){
+//socket.on('connection',function(data){
   socket.emit('Terminal',{shell:'uptime'});
+  socket.on('Terminal',function(data){
+    console.log(data.out);
+    imgPreview.innerHTML='<pre>'+data.out+'</pre>';
+    var notinfo=data.out.split(', ')
+    send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
+  });
+  socket.on('image',function(data){
+    imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
+  });
 
-// Chat.io
-socket.on('login',function(data){
-  console.log(data);
-  connected=true;
-  var message="Welcome to Auntie.Dot! You are the first two [" + data.numUsers+"]";
-  $('#chatlog div').html(message);
-  log(message,{prepend:true});
-  addParticipantsMessage(data);
+  //socket.emit('event',{my:'data'});
+  //console.log(data);
+
+  /*
+  // Chat.io
+  socket.on('login',function(data){
+    console.log(data);
+    connected=true;
+    var message="Welcome to Auntie.Dot! You are the first two [" + data.numUsers+"]";
+    $('#chatlog div').html(message);
+    log(message,{prepend:true});
+    addParticipantsMessage(data);
+  });
+  socket.on('Message',function(data){
+    console.log(data);
+    addChatMessage(data);
+  });
+  socket.on('user joined',function(data){
+    log(data.username+' joined');
+    addParticipantsMessage(data);
+  });
+  socket.on('user left',function(data){
+    log(data.username+' left');
+    addParticipantsMessage(data);
+  });
+  */
+  // Chat.io End
 });
-socket.on('Message',function(data){
-  console.log(data);
-  addChatMessage(data);
-});
-socket.on('user joined',function(data){
-  log(data.username+' joined');
-  addParticipantsMessage(data);
-});
-socket.on('user left',function(data){
-  log(data.username+' left');
-  addParticipantsMessage(data);
-});
-// Chat.io End
 /* Socket.io End */
 
 /* Chat.dot */
@@ -63,6 +65,7 @@ $inputMessage.keydown(function(e){// input Message
 });
 
 // Chat.function
+/*
 function setUsername(){
   username=cleanInput($inputName.val().trim());
   if(username){socket.emit('add user',username);}
@@ -124,7 +127,7 @@ function getUsernameColor(username){
 }
 // Chat.function End
 /* Chat.dot End */
-
+/*
 window.onload=function(){
   var upFiles=document.querySelector('#upFiles');
   var imgPreview=$('#imgPreview');
@@ -157,10 +160,12 @@ function readFile(){
     reader.onload=function(e){
       imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
       //socket.emit('new image',this.result); //发送给socket;
-      socket.emit('image',{file:filename,image:this.result});
+      //socket.emit('image',{file:filename,image:this.result});
     }
-  }
+  }//files.length
 }
+*/
+
 function send_notify(body){
   new notify('Wingman Pi',body);
 }

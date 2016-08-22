@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="renderer" content="webkit">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Xuui Template"/>
+<title>Picture Preview</title>
+<!-- Add to homescreen for Chrome on Android -->
+<!-- Favicon: usr .gif type="image/gif"--><!--
+<link rel="shortcut icon" type="image/x-icon" href="images/icons/favicon.ico">
+<link rel="icon" type="image/png" href="images/icons/favicon.png">
+<link rel="icon" sizes="192x192" href="images/icons/app-icon72x72@2x.png">
+
+<!-- Add to homescreen for Safari on iOS --><!--
+<link rel="apple-touch-icon-precomposed" href="images/icons/app-icon72x72@2x.png">
+
+<!-- Tile icon for Win8 (144x144 + tile color) --><!--
+<meta name="msapplication-TileImage" content="images/icons/app-icon72x72@2x.png">
+<meta name="msapplication-TileColor" content="#0e90d2">
+-->
+<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+  <div class="control">
+    <!--input type="file" name="upFiles" id="upFiles"-->
+    <input type="file" name="upFiles" id="upFiles" multiple="multiple">
+    <button type="button" id="selFile"><i class="icon iconfont">&#xe739;</i></button>
+    <!--button type="button" id="open"><i class="icon iconfont">&#xf001a;</i></button-->
+    <button type="button" class="o" id="fullScreen" value="0">
+      <i class="icon iconfont enter">&#xf004a;</i>
+      <i class="icon iconfont exit">&#xf004c;</i>
+    </button>
+  </div>
+  <div id="imgPreview"></div>
+<script src="frameworks/socket.io.js"></script>
+<script src="script/preview.js"></script>
+</body>
+</html>
