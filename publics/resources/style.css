@@ -1,7 +1,5 @@
 @charset "UTF-8";
-@import url(normalize.css);
-*,*:before,*:after{-webkit-box-sizing:border-box;box-sizing:border-box;}
-html,body{height:100%;}
-html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-body{position:relative;background:#f4f4f4;color:#333;font:400 14px/1.42857143 -apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen-Sans','Ubuntu','Cantarell','Lucida Grande','Helvetica Neue Ultra Light','Helvetica Neue Interface M3',Helvetica,'Microsoft YaHei',FreeSans,Arimo,'Droid Sans','wenquanyi micro hei','Hiragino Sans GB','Hiragino Sans GB W3',Arial,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+@import url(base.css);
 
+html,body{height:100%;}
+body{position:relative;background:#f4f4f4;color:#333;}
