@@ -66,16 +66,13 @@ function readFile(){
     var reader=new FileReader();
     reader.readAsDataURL(files[i]);
     reader.onload=function(e){
-      imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
-      //socket.emit('preview',this.result); //发送给socket;
-      socket.emit('preview',{file:filename,image:this.result});
+      imgPreview.innerHTML+='<img class="xu-img" src="'+this.result+'" alt=""/>';
+      socket.emit('previewer',{file:filename,image:this.result});
+      console.log('sent: '+filename);
     }
   }
 }
-//socket.emit('preview','start');
-socket.on('connection',function (){
-  socket.on('preview',function(data){
-    //console.log(data);
-    imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
-  });
+socket.on('previewer',function(data){
+  console.log('receive: '+data.file);
+  imgPreview.innerHTML='<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>';
 });

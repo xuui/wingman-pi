@@ -37,7 +37,6 @@ cat /proc/cpuinfo // 查看 CPU 信息
 -->
 <div>
   <p><input type="text" id="inputName" placeholder="请输入名字"></p>
-  <p><input type="text" id="inputMsg" placeholder="说点什么吧"></p>
   <div id="chatlog">
       <div></div>
       <ul class="messages"></ul>
@@ -48,7 +47,7 @@ cat /proc/cpuinfo // 查看 CPU 信息
 <div id="imgPreview"></div>
 
 <div class="sendbox">
-  <input type="text" class="input">
+  <input type="text" class="input" id="inputMsg" placeholder="说点什么吧">
   <button type="button" class="btn"></button>
 </div>
 

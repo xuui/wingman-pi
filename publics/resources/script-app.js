@@ -12,22 +12,6 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
 /* Socket.io */
 //var socket=io();
 var socket=io.connect('http://dot.xuui.net');
-socket.on('previewer',function(data){
-  imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
-});
-socket.on('Terminal',function(data){
-  console.log(data.out);
-  imgPreview.innerHTML='<pre>'+data.out+'</pre>';
-  var notinfo=data.out.split(', ')
-  send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
-});
-/*
-socket.on('news',function(data){
-  console.log(data);
-});
-*/
-  socket.emit('event',{my:'data'});
-  socket.emit('Terminal',{shell:'uptime'});
 
 // Chat.io
 socket.on('login',function(data){
@@ -51,6 +35,24 @@ socket.on('user left',function(data){
   addParticipantsMessage(data);
 });
 // Chat.io End
+
+// Previewer.io
+socket.on('previewer',function(data){
+  console.log('receive: '+data.file);
+  imgPreview.innerHTML='<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>';
+});
+// Previewer.io End
+
+// Terminal.io
+socket.emit('terminal',{shell:'uptime'});
+socket.on('terminal',function(data){
+  console.log(data.out);
+  imgPreview.innerHTML='<pre>'+data.out+'</pre>';
+  var notinfo=data.out.split(', ')
+  send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
+});
+// Terminal.io End
+
 /* Socket.io End */
 
 /* Chat.dot */
@@ -123,7 +125,7 @@ function getUsernameColor(username){
   return COLORS[index];
 }
 // Chat.function End
-/* Chat.dot End */
+/* Chat.io End */
 
 window.onload=function(){
   var upFiles=document.querySelector('#upFiles');
@@ -155,12 +157,13 @@ function readFile(){
     var reader=new FileReader();
     reader.readAsDataURL(files[i]);
     reader.onload=function(e){
-      imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
+      imgPreview.innerHTML+='<img class="xu-img" src="'+this.result+'" alt=""/>';
       //socket.emit('previewer',this.result); //发送给socket;
       socket.emit('previewer',{file:filename,image:this.result});
     }
-  }
+  }//files.length
 }
+
 function send_notify(body){
   new notify('Wingman Pi',body);
 }
