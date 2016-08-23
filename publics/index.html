@@ -35,21 +35,26 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
 cat /sys/class/thermal/thermal_zone0/temp
 cat /proc/cpuinfo // 查看 CPU 信息
 -->
-<div>
-  <p><input type="text" id="inputName" placeholder="请输入名字"></p>
-  <div id="chatlog">
-      <div></div>
-      <ul class="messages"></ul>
-  </div>
-</div>
-<hr>
-<p><input type="file" name="upFiles" id="upFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.gif"></p>
-<div id="imgPreview"></div>
-
-<div class="sendbox">
-  <input type="text" class="input" id="inputMsg" placeholder="说点什么吧">
-  <button type="button" class="btn"></button>
-</div>
+<article data-ui="page">
+  <header>
+    Wingman Pi
+  </header>
+  <section>
+    <div>
+      <p><input type="text" id="inputName" placeholder="请输入名字"></p>
+      <div id="chatlog">
+        <div></div>
+        <ul class="messages"></ul>
+      </div>
+    </div>
+    <p><input type="file" name="upFiles" id="upFiles" accept=".png,.jpg,.jpeg,.gif"></p>
+    <div id="imgPreview"></div>
+  </section>
+  <footer class="sendbox">
+    <input type="text" class="input" id="inputMsg" placeholder="说点什么吧">
+    <button type="button" class="btn"></button>
+  </footer>
+</article>
 
 <script src="frameworks/socket.io.js"></script>
 <script src="frameworks/jquery.js"></script>

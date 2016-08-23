@@ -1,5 +1,6 @@
 //var socket=io();//socket.init
 var socket=io.connect('http://127.0.0.1:8483');
+//var socket=io.connect('http://10.0.117.33');
 
 window.onload=function(){
   var selFile=document.querySelector('#selFile');

@@ -1,9 +1,11 @@
 $(function(){
+'use strict';
 var username;
 var connected=false;
 var $inputName=$('#inputName');
 var $inputMessage=$('#inputMsg');
 var $messages=$('.messages');
+var $Previewer=$('#imgPreview');
 var FADE_TIME=150;
 var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
   '#1976d2','#0288d1','#00838f','#388e3c','#558b2f',
@@ -12,7 +14,6 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
 /* Socket.io */
 var socket=io();
 //var socket=io.connect('http://dot.xuui.net');
-
 // Chat.io
 socket.on('login',function(data){
   console.log(data);
@@ -39,7 +40,7 @@ socket.on('user left',function(data){
 // Previewer.io
 socket.on('previewer',function(data){
   console.log('receive: '+data.file);
-  imgPreview.innerHTML='<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>';
+  $Previewer.html('<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>');
 });
 // Previewer.io End
 
@@ -47,24 +48,21 @@ socket.on('previewer',function(data){
 socket.emit('terminal',{shell:'uptime'});
 socket.on('terminal',function(data){
   console.log(data.out);
-  imgPreview.innerHTML='<pre>'+data.out+'</pre>';
+  $Previewer.html('<pre>'+data.out+'</pre>');
   var notinfo=data.out.split(', ')
   send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
 // Terminal.io End
-
 /* Socket.io End */
 
-/* Chat.dot */
+/* Function */
+// Chat.function
 $inputName.keydown(function(e){ //input Name
   if(e.which===13){setUsername();}
 });
-
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
 });
-
-// Chat.function
 function setUsername(){
   username=cleanInput($inputName.val().trim());
   if(username){socket.emit('add user',username);}
@@ -125,46 +123,39 @@ function getUsernameColor(username){
   return COLORS[index];
 }
 // Chat.function End
-/* Chat.io End */
 
-window.onload=function(){
-  var upFiles=document.querySelector('#upFiles');
-  var imgPreview=$('#imgPreview');
-  if(typeof(FileReader)==='undefined'){
-    result.innerHTML='抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！';
-    upFiles.setAttribute('disabled','disabled');
-  }else{
-    upFiles.addEventListener('change',readFile,false);
-  }
-}
-function readFile(){
-  //var file=this.files[0];
+// Previewer.function
+if(typeof(FileReader)==='undefined'){
+  result.html('抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！');
+  $('#upFiles').hide();
+}else{
+$('#upFiles').on('change',function(){
   var files=this.files;
-  imgPreview.innerHTML='';
+  $Previewer.html('');
   for(var i=0,l=files.length;i<l;i++){
-    //console.log(files[i]);
-    console.log(files[i].type);
-    if(files[i].size/1024 >10248){
-      imgPreview.innerHTML='文件不能大于 10M';
+    console.log(files[i].name+': '+files[i].type+' '+files[i].size/1000+'KB');
+    if(files[i].size/1024 >5120){
+      $Previewer.html('文件不能大于 5M');
       return false;
     }
     if(!/image\/\w+/.test(files[i].type)){
-      imgPreview.innerHTML='只提供图片文件的预览';
+      $Previewer.html('只提供图片文件的预览');
       return false;
     }
-    var filename=this.files[i].name;
-    console.log(filename);
-    var reader=new FileReader();
-    reader.readAsDataURL(files[i]);
-    reader.onload=function(e){
-      imgPreview.innerHTML+='<img class="xu-img" src="'+this.result+'" alt=""/>';
-      //socket.emit('previewer',this.result); //发送给socket;
+    var filename=files[i].name,reader=new FileReader();
+    reader.addEventListener("load",function(){
+      $Previewer.html('<img class="xu-img" src="'+reader.result+'" alt=""/>');
       socket.emit('previewer',{file:filename,image:this.result});
-    }
-  }//files.length
+      console.log('sent: '+filename);
+    },false);
+    if(files[i]){reader.readAsDataURL(files[i]);}
+  }
+});
 }
+// Previewer.function End
 
 function send_notify(body){
   new notify('Wingman Pi',body);
 }
+/* Function End*/
 });
