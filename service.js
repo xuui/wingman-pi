@@ -4,48 +4,33 @@ var app=express();
 var server=require('http').createServer(app);
 var io=require('socket.io')(server);
 var exec=require('child_process').exec;
-//var port=process.env.PORT || 80;
-var port=process.env.PORT || 8483;
+var port=process.env.PORT || 80;
+//var port=process.env.PORT || 8483;
 //var io=require('socket.io')(8483);
 
 /* Express */
 server.listen(port,function(){console.log('Wingman-Pi listening at port %d',port);});
 app.use(express.static(__dirname+'/publics'));
-
 /* Express End */
 
 /* Socket.io */
-
-/* Chat.dot */
-var usernames={};
-var numUsers=0;
-/* Chat.dot End */
-
 io.on('connection',function(socket){
-  socket.on('previewer',function(data){
-    socket.broadcast.emit('previewer',{file:data.file,image:data.image});
-  });
-  socket.on('Terminal',function(data){
-    console.log(data);
-    child=exec(data.shell,{encoding:'utf8'},function(error,stdout,stderr){
-      console.log('stdout: ${stdout}');
-      socket.emit('Terminal',{out:stdout});
-      console.log('stderr: ${stderr}');
-      if(error!==null){console.log('exec error: ${error}');}
-    });
-  });
-  //socket.emit('news',{hello:'world'});
+  /*
+  socket.emit('news',{hello:'world'});
   socket.on('event',function(data){
     console.log(data);
   });
-  
-  /* Chat.dot */
+  */
+
+// Chat.io
+  var usernames={};
+  var numUsers=0;
   var addedUser=false;
   socket.on('Message',function(data){
     socket.broadcast.emit('Message',{username:socket.username,message:data});
   });
   socket.on('add user',function(username){
-    //console.log('login user: '+ username);
+    console.log('login user: '+ username);
     socket.username=username;
     usernames[username]=username;
     ++numUsers;
@@ -66,7 +51,26 @@ io.on('connection',function(socket){
         numUsers:numUsers
       });
     }
-  });  
-  /* Chat.dot End */
+  });
+// Chat.io End
+
+// Previewer.io
+  socket.on('previewer',function(data){
+    socket.broadcast.emit('previewer',{file:data.file,image:data.image});
+    console.log('broadcast: '+data.file);
+  });
+// Previewer.io End
+
+// Terminal.io
+  socket.on('terminal',function(data){
+    console.log(data);
+    child=exec(data.shell,{encoding:'utf8'},function(error,stdout,stderr){
+      console.log('stdout: ${stdout}');
+      socket.emit('terminal',{out:stdout});
+      console.log('stderr: ${stderr}');
+      if(error!==null){console.log('exec error: ${error}');}
+    });
+  });
+// Terminal.io End
 });
 /* Socket.io End */
