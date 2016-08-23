@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Xuui Template"/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>Auntie Dot.</title>
+<link href="resources/icons/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="resources/icons/favicon.png" rel="icon" type="image/png">
+<link href="resources/icons/app-icon72x72@2x.png" rel="icon" sizes="192x192">
+<link href="resources/icons/app-icon72x72@2x.png" rel="apple-touch-icon-precomposed">
+<!-- Tile icon for Win8 (144x144 + tile color) --><!--
+<meta name="msapplication-TileColor" content="#0e90d2">
+<meta name="msapplication-TileImage" content="images/icons/app-icon72x72@2x.png">
+-->
+
+<link rel="stylesheet" href="auntie.dot/style.css">
+</head>
+<body>
+  <ul class="pages">
+    <li class="chat page">
+      <div class="chatArea">
+        <ul class="messages"></ul>
+      </div>
+      <input class="inputMessage" placeholder="在这里输入..."/>
+    </li>
+    <li class="login page">
+      <div class="form">
+        <h3 class="title">您的昵称是什么?</h3>
+        <input class="usernameInput" type="text" maxlength="14" />
+      </div>
+    </li>
+  </ul>
+
+<script src="frameworks/socket.io.js"></script>
+<script src="frameworks/jquery.js"></script>
+<script src="auntie.dot/auntie.dot.js"></script>
+</body>
+</html>

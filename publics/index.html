@@ -1,20 +1,28 @@
 <!doctype html>
 <html lang="zh">
-<html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
-<meta name="renderer" content="webkit">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Xuui Template"/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
 <title>Wingman Pi</title>
 <link href="resources/icons/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="resources/icons/favicon.png" rel="icon" type="image/png">
+<link href="resources/icons/app-icon72x72@2x.png" rel="icon" sizes="192x192">
+<link href="resources/icons/app-icon72x72@2x.png" rel="apple-touch-icon-precomposed">
+<!-- Tile icon for Win8 (144x144 + tile color) --><!--
+<meta name="msapplication-TileColor" content="#0e90d2">
+<meta name="msapplication-TileImage" content="images/icons/app-icon72x72@2x.png">
+-->
+
 <link href="resources/style.css" rel="stylesheet">
-<script src="frameworks/socket.io.js"></script>
-<script src="frameworks/jquery.js"></script>
-<script src="frameworks/webnotify.js"></script>
-<script src="resources/script.js"></script>
 </head>
 <body>
 
@@ -39,5 +47,9 @@ cat /proc/cpuinfo // 查看 CPU 信息
 <p><input type="file" name="upFiles" id="upFiles" multiple="multiple" accept=".png,.jpg,.jpeg,.gif"></p>
 <div id="imgPreview"></div>
 
+<script src="frameworks/socket.io.js"></script>
+<script src="frameworks/jquery.js"></script>
+<script src="frameworks/webnotify.js"></script>
+<script src="resources/script.js"></script>
 </body>
 </html>
