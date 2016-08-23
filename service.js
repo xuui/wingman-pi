@@ -22,16 +22,16 @@ var numUsers=0;
 /* Chat.dot End */
 
 io.on('connection',function(socket){
-  socket.on('preview',function(data){
-    socket.broadcast.emit('preview',{file:data.file,image:data.image});
+  socket.on('previewer',function(data){
+    socket.broadcast.emit('previewer',{file:data.file,image:data.image});
   });
   socket.on('Terminal',function(data){
     console.log(data);
-    child=exec(data.shell,{encoding:'utf8'},(error,stdout,stderr)=>{
+    child=exec(data.shell,{encoding:'utf8'},function(error,stdout,stderr){
       console.log('stdout: ${stdout}');
       socket.emit('Terminal',{out:stdout});
       console.log('stderr: ${stderr}');
-      if(error!==null){console.log(`exec error: ${error}`);}
+      if(error!==null){console.log('exec error: ${error}');}
     });
   });
   //socket.emit('news',{hello:'world'});

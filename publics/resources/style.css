@@ -2,4 +2,11 @@
 @import url(base.css);
 
 html,body{height:100%;}
-body{position:relative;background:#f4f4f4;color:#333;}
+body{position:relative;background:#041114;color:#6dc3d2;text-shadow:0 1px 1px rgba(0,0,0,.2)}
+
+input[type=text],.sendbox .input{background:rgba(16,47,55,.86);border:1px solid rgba(26,100,112,.78);padding:5px;color:#b4d4d9;}
+input[type=text]:focus,.btn:focus{outline:none;}
+
+.sendbox{position: fixed;z-index:100;bottom:0;left:0;right:0;padding:9px 20px;}
+.sendbox .input{padding:7px 35px 7px 8px;width:100%;line-height:1;font-size:18px;}
+.sendbox .btn{background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:54px 58px;border:none;position:absolute;right:0;bottom:0;width:54px;height:58px;}

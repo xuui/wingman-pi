@@ -12,7 +12,7 @@ var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
 /* Socket.io */
 //var socket=io();
 var socket=io.connect('http://dot.xuui.net');
-socket.on('preview',function(data){
+socket.on('previewer',function(data){
   imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
 });
 socket.on('Terminal',function(data){
@@ -156,8 +156,8 @@ function readFile(){
     reader.readAsDataURL(files[i]);
     reader.onload=function(e){
       imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
-      //socket.emit('preview',this.result); //发送给socket;
-      socket.emit('preview',{file:filename,image:this.result});
+      //socket.emit('previewer',this.result); //发送给socket;
+      socket.emit('previewer',{file:filename,image:this.result});
     }
   }
 }
