@@ -54,7 +54,7 @@ socket.on('previewer',function(data){
 socket.emit('terminal',{shell:'uptime'});
 socket.on('terminal',function(data){
   console.log(data.out);
-  $Previewer.html('<pre>'+data.out+'</pre>');
+  $Previewer.html('<p>'+data.out+'</p>');
   var notinfo=data.out.split(', ')
   send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
