@@ -1,3 +1,30 @@
+#Ignoring Files.
+*.cab
+*.msi
+*.msm
+*.msp
+._*
+.apdisk
+.AppleDB
+.AppleDouble
+.AppleDesktop
+.DS_Store
+.LSOverride
+.lock-wscript
+.Spotlight-V100
+.Trashes
+Desktop.ini
+ehthumbs.db
+Icon
+Thumbs.db
+
+#Ignore Directory.
+$RECYCLE.BIN/
+lib-cov
+coverage
+Network Trash Folder
+Temporary Items
+
 # Logs
 logs
 *.log
