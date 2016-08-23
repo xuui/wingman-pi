@@ -67,14 +67,14 @@ function readFile(){
     reader.readAsDataURL(files[i]);
     reader.onload=function(e){
       imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
-      //socket.emit('new image',this.result); //发送给socket;
-      socket.emit('image',{file:filename,image:this.result});
+      //socket.emit('preview',this.result); //发送给socket;
+      socket.emit('preview',{file:filename,image:this.result});
     }
   }
 }
-//socket.emit('new image','start');
+//socket.emit('preview','start');
 socket.on('connection',function (){
-  socket.on('image',function(data){
+  socket.on('preview',function(data){
     //console.log(data);
     imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
   });

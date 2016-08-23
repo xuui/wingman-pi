@@ -21,7 +21,7 @@ socket.on('connection',function (){
     var notinfo=data.out.split(', ')
     send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
   });
-  socket.on('image',function(data){
+  socket.on('preview',function(data){
     imgPreview.innerHTML='<img src="'+data.image+'" alt="'+data.file+'"/>';
   });
 
@@ -159,8 +159,8 @@ function readFile(){
     reader.readAsDataURL(files[i]);
     reader.onload=function(e){
       imgPreview.innerHTML+='<img src="'+this.result+'" alt=""/>';
-      //socket.emit('new image',this.result); //发送给socket;
-      //socket.emit('image',{file:filename,image:this.result});
+      //socket.emit('preview',this.result); //发送给socket;
+      //socket.emit('preview',{file:filename,image:this.result});
     }
   }//files.length
 }

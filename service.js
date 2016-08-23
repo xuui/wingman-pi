@@ -4,8 +4,8 @@ var app=express();
 var server=require('http').createServer(app);
 var io=require('socket.io')(server);
 var exec=require('child_process').exec;
-var port=process.env.PORT || 80;
-//var port=process.env.PORT || 8483;
+//var port=process.env.PORT || 80;
+var port=process.env.PORT || 8483;
 //var io=require('socket.io')(8483);
 
 /* Express */
@@ -22,8 +22,8 @@ var numUsers=0;
 /* Chat.dot End */
 
 io.on('connection',function(socket){
-  socket.on('image',function(data){
-    socket.broadcast.emit('image',{file:data.file,image:data.image});
+  socket.on('preview',function(data){
+    socket.broadcast.emit('preview',{file:data.file,image:data.image});
   });
   socket.on('Terminal',function(data){
     console.log(data);

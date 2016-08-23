@@ -16,8 +16,8 @@ app.use(express.static(__dirname+'/publics'));
   });
 });*/
 io.on('connection',function(socket){
-  socket.on('new image',function(data){
-    socket.broadcast.emit('new image',{file:data.file,image:data.image});
+  socket.on('preview',function(data){
+    socket.broadcast.emit(preview',{file:data.file,image:data.image});
     //console.log(data);
   });
 });
