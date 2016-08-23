@@ -2,14 +2,15 @@ $(function(){
 'use strict';
 var username;
 var connected=false;
-var $inputName=$('#inputName');
-var $inputMessage=$('#inputMsg');
-var $messages=$('.messages');
-var $Previewer=$('#imgPreview');
-var FADE_TIME=150;
-var COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5',
-  '#1976d2','#0288d1','#00838f','#388e3c','#558b2f',
-  '#ff6f00','#e65100','#f4511e','#546e7a'];
+var $inputName=$('#inputName'),
+    $inputMessage=$('#inputMsg'),
+    $submitMsg=$('#submitMsg'),
+    $messages=$('.messages'),
+    $uNum=$('#uNum'),
+    $Previewer=$('#imgPreview');
+var FADE_TIME=150,
+    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a'];
+var COLORS=['#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 
 /* Socket.io */
 var socket=io();
@@ -18,22 +19,27 @@ var socket=io();
 socket.on('login',function(data){
   console.log(data);
   connected=true;
-  var message="Welcome to Auntie.Dot! You are the first two [" + data.numUsers+"]";
-  $('#chatlog div').html(message);
+  //var message="Welcome to Auntie.Dot! No.[" + data.numUsers+"]";
+  var message="欢迎访问 Auntie Dot.";
+  //$uNum.text('No.'+data.numUsers);
+  //$('#chatlog div').html(message);
   log(message,{prepend:true});
   addParticipantsMessage(data);
+	send_notify(data.username+', 欢迎您!');
 });
 socket.on('Message',function(data){
   console.log(data);
   addChatMessage(data);
 });
 socket.on('user joined',function(data){
-  log(data.username+' joined');
+  log(data.username+' 进入');
   addParticipantsMessage(data);
+	send_notify(data.username+' 进入');
 });
 socket.on('user left',function(data){
-  log(data.username+' left');
+  log(data.username+' 离开');
   addParticipantsMessage(data);
+	send_notify(data.username+' 离开');
 });
 // Chat.io End
 
@@ -63,6 +69,7 @@ $inputName.keydown(function(e){ //input Name
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
 });
+$submitMsg.click(function(){sendMessage();});
 function setUsername(){
   username=cleanInput($inputName.val().trim());
   if(username){socket.emit('add user',username);}
@@ -79,8 +86,12 @@ function sendMessage(){
 function cleanInput(input){return $('<div/>').text(input).text();}
 function addParticipantsMessage(data){
   var message='';
-  if (data.numUsers===1){message+="there's 1 participant";}else{
-    message+="there are "+data.numUsers+" participants";
+  if (data.numUsers===1){
+    //message+="当前只有 1 个人在线";
+    $uNum.text('No.1');
+  }else{
+    //message+="当前有 "+data.numUsers+" 在线";
+    $uNum.text('No.'+data.numUsers);
   }
   log(message);
 }
