@@ -58,19 +58,34 @@ function readFile(){
   imgPreview.innerHTML='';
   for(var i=0,l=files.length;i<l;i++){
     //console.log(files[i]);
-    if(!/image\/\w+/.test(files[i].type)){
+    /*if(!/image\/\w+/.test(files[i].type)){
       imgPreview.innerHTML='只提供图片文件的预览';
       return false;
-    }
+    }*/
     var filename=this.files[i].name;
     console.log(filename);
     var reader=new FileReader();
     reader.readAsDataURL(files[i]);
-    reader.onload=function(e){
-      imgPreview.innerHTML+='<img class="xu-img" src="'+this.result+'" alt=""/>';
-      socket.emit('previewer',{file:filename,image:this.result});
-      console.log('sent: '+filename);
+    if(/audio\/\w+/.test(files[i].type)){
+      reader.onload=function(e){
+        imgPreview.innerHTML+='<audio controls autoplay src="'+this.result+'" />';
+        socket.emit('previewer',{file:filename,type:'audio',image:this.result});
+        console.log('sent: '+filename);
+      }
+    }else if(/video\/\w+/.test(files[i].type)){
+      reader.onload=function(e){
+        imgPreview.innerHTML+='<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>';
+        socket.emit('previewer',{file:filename,type:'video',image:this.result});
+        console.log('sent: '+filename);
+      }
+    }else{
+      reader.onload=function(e){
+        imgPreview.innerHTML+='<img class="xu-img" src="'+this.result+'" alt=""/>';
+        socket.emit('previewer',{file:filename,type:'image',image:this.result});
+        console.log('sent: '+filename);
+      }
     }
+
   }
 }
 socket.on('previewer',function(data){

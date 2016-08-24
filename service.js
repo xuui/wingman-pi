@@ -56,7 +56,7 @@ io.on('connection',function(socket){
 
 // Previewer.io
   socket.on('previewer',function(data){
-    socket.broadcast.emit('previewer',{file:data.file,image:data.image});
+    socket.broadcast.emit('previewer',{file:data.file,type:data.type,image:data.image});
     console.log('broadcast: '+data.file);
   });
 // Previewer.io End
