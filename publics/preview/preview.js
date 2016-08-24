@@ -68,13 +68,13 @@ function readFile(){
     reader.readAsDataURL(files[i]);
     if(/audio\/\w+/.test(files[i].type)){
       reader.onload=function(e){
-        imgPreview.innerHTML+='<audio controls autoplay src="'+this.result+'" />';
+        imgPreview.innerHTML='<audio controls autoplay src="'+this.result+'" />';
         socket.emit('previewer',{file:filename,type:'audio',image:this.result});
         console.log('sent: '+filename);
       }
     }else if(/video\/\w+/.test(files[i].type)){
       reader.onload=function(e){
-        imgPreview.innerHTML+='<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>';
+        imgPreview.innerHTML='<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>';
         socket.emit('previewer',{file:filename,type:'video',image:this.result});
         console.log('sent: '+filename);
       }
@@ -85,10 +85,15 @@ function readFile(){
         console.log('sent: '+filename);
       }
     }
-
   }
 }
 socket.on('previewer',function(data){
-  console.log('receive: '+data.file);
-  imgPreview.innerHTML='<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>';
+  console.log('receive: '+data.file+data.type);
+  if(data.type=='audio'){
+    imgPreview.innerHTML='<audio controls autoplay src="'+data.image+'" />';
+  }else if(data.type=='video'){
+    imgPreview.innerHTML='<video controls autoplay><source type="video/mp4" src="'+data.image+'"></video>';
+  }else{
+    imgPreview.innerHTML+='<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>';
+  }
 });
