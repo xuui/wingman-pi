@@ -3,7 +3,7 @@
 @import url(fonts/AgencyFB.css);
 
 html,body{height:100%;}
-body{position:relative;background:#041114;color:#6dc3d2;text-shadow:0 1px 1px rgba(0,0,0,.2);}
+body{position:relative;background:#041114 url(backgrid.png);color:#6dc3d2;text-shadow:0 1px 1px rgba(0,0,0,.2);}
 p{margin:0 0 1em;}
 header,footer{position:fixed;z-index:10;left:0;right:0;}
 header{top:0;}footer{bottom:0;}
@@ -25,6 +25,6 @@ input[type=text]:focus,.btn:focus{outline:none;}
 .sendbox .btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
 
 
-@media only screen and (-webkit-min-device-pixel-ratio:3),only screen and (min-device-pixel-ratio:3){
-.sendbox .btn{}
+@media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-device-pixel-ratio:3){
+body{background-size:40px 40px;}
 }
