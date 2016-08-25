@@ -37,22 +37,23 @@ cat /proc/cpuinfo // 查看 CPU 信息
 -->
 <article data-ui="page">
   <header>
-    Wingman Pi
+    <span id="uNum">No.0</span>
+    <b>Auntie Dot</b>
   </header>
   <section>
     <div>
-      <input type="text" id="inputName" placeholder="请输入名字">
+      <p><input type="text" id="inputName" placeholder="请输入名字"></p>
       <div id="chatlog">
         <div></div>
         <ul class="messages"></ul>
       </div>
     </div>
-    <p><input type="file" name="upFiles" id="upFiles" accept=".png,.jpg,.jpeg,.gif"></p>
-    <div id="imgPreview"></div>
+    <p><input type="file" name="upFiles" id="upFiles" accept=".png,.jpg,.jpeg,.gif,.mp3,.mp4"></p>
+    <div id="previewer"></div>
   </section>
   <footer class="sendbox">
     <input type="text" class="input" id="inputMsg" placeholder="说点什么吧">
-    <button type="button" class="btn"></button>
+    <button type="button" id="submitMsg" class="btn"></button>
   </footer>
 </article>
 

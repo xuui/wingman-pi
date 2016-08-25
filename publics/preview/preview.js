@@ -1,6 +1,7 @@
-var socket=io();//socket.init
+//var socket=io();//socket.init
 //var socket=io.connect('http://127.0.0.1:8483');
 //var socket=io.connect('http://10.0.117.33');
+var socket=io.connect('http://dot.xuui.net');
 
 window.onload=function(){
   var selFile=document.querySelector('#selFile');
@@ -57,11 +58,11 @@ function readFile(){
   var files=this.files;
   imgPreview.innerHTML='';
   for(var i=0,l=files.length;i<l;i++){
-    //console.log(files[i]);
-    /*if(!/image\/\w+/.test(files[i].type)){
-      imgPreview.innerHTML='只提供图片文件的预览';
+    console.log(files[i].name+': '+files[i].type+' '+files[i].size/1000+'KB');
+    if(!/image|audio|video\/\w+/.test(files[i].type)){
+      imgPreview.innerHTML='不支持的文件类型!';
       return false;
-    }*/
+    }
     var filename=this.files[i].name;
     console.log(filename);
     var reader=new FileReader();

@@ -7,10 +7,9 @@ var $inputName=$('#inputName'),
     $submitMsg=$('#submitMsg'),
     $messages=$('.messages'),
     $uNum=$('#uNum'),
-    $Previewer=$('#imgPreview');
+    $Previewer=$('#previewer');
 var FADE_TIME=150,
-    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a'];
-var COLORS=['#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
+    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a','#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 
 /* Socket.io */
 //var socket=io();
@@ -45,8 +44,14 @@ socket.on('user left',function(data){
 
 // Previewer.io
 socket.on('previewer',function(data){
-  console.log('receive: '+data.file);
-  $Previewer.html('<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>');
+  console.log('receive: '+data.file+data.type);
+  if(data.type=='audio'){
+    $Previewer.html('<audio controls autoplay src="'+data.image+'" />');
+  }else if(data.type=='video'){
+    $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+data.image+'"></video>');
+  }else{
+    $Previewer.html('<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>');
+  }
 });
 // Previewer.io End
 
@@ -149,16 +154,30 @@ $('#upFiles').on('change',function(){
       $Previewer.html('文件不能大于 5M');
       return false;
     }
-    if(!/image\/\w+/.test(files[i].type)){
-      $Previewer.html('只提供图片文件的预览');
+    if(!/image|audio|video\/\w+/.test(files[i].type)){
+      $Previewer.html('不支持的文件类型!');
       return false;
     }
     var filename=files[i].name,reader=new FileReader();
-    reader.addEventListener("load",function(){
-      $Previewer.html('<img class="xu-img" src="'+reader.result+'" alt=""/>');
-      socket.emit('previewer',{file:filename,image:this.result});
-      console.log('sent: '+filename);
-    },false);
+    if(/audio\/\w+/.test(files[i].type)){
+      reader.addEventListener("load",function(e){
+        $Previewer.html('<audio controls autoplay src="'+this.result+'" />');
+        socket.emit('previewer',{file:filename,type:'audio',image:this.result});
+        console.log('sent: '+filename);
+      },false);
+    }else if(/video\/\w+/.test(files[i].type)){
+      reader.addEventListener("load",function(e){
+        $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
+        socket.emit('previewer',{file:filename,type:'video',image:this.result});
+        console.log('sent: '+filename);
+      },false);
+    }else{
+      reader.addEventListener("load",function(e){
+        $Previewer.html('<img class="xu-img" src="'+this.result+'" alt=""/>');
+        socket.emit('previewer',{file:filename,type:'image',image:this.result});
+        console.log('sent: '+filename);
+      },false);
+    }
     if(files[i]){reader.readAsDataURL(files[i]);}
   }
 });
