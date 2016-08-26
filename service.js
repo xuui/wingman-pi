@@ -14,6 +14,8 @@ app.use(express.static(__dirname+'/publics'));
 /* Express End */
 
 /* Socket.io */
+var usernames={};
+var numUsers=0;
 io.on('connection',function(socket){
   /*
   socket.emit('news',{hello:'world'});
@@ -23,15 +25,43 @@ io.on('connection',function(socket){
   */
 
 // Chat.io
-  var usernames={};
-  var numUsers=0;
   var addedUser=false;
   socket.on('Message',function(data){
     socket.broadcast.emit('Message',{username:socket.username,message:data});
+    //...
+    //console.log(data);
+    //var cmdText,cmdLog="";
+    //cmdText=data.split("wger:"); //拆分命令行
+    //console.log(cmdText);
+    //var exec=require('child_process').exec,child; //执行命令
+    //child=exec('wget '+cmdText,function(error,stdout,stderr){
+    //  console.log(stdout);
+    //  if(error!==null){console.log(error);}//console.log(stderr);
+    //});
+    /*var scmdLine=data.split("cmd:");
+    if(scmdLine[1]){
+      //console.log('Line:'+scmdLine[1]);
+      var childOut='';
+      child=exec(scmdLine,function(error,stdout,stderr){
+        console.log(stdout);
+        socket.broadcast.emit('typing',{
+          username:'Dot',
+          message:stdout
+        });
+        if(error!==null){console.log(error);}
+      });
+      
+    }else{
+      socket.broadcast.emit('new message',{
+        username:socket.username,
+        message:data
+      });
+    }*/
+    //...
   });
   socket.on('add user',function(username){
-    console.log('login user: '+ username);
     socket.username=username;
+    console.log('login user: '+ username);
     usernames[username]=username;
     ++numUsers;
     addedUser=true;
@@ -41,6 +71,10 @@ io.on('connection',function(socket){
       username:socket.username,
       numUsers:numUsers
     });
+    socket.broadcast.emit('Message',{
+      username:'Auntie Dot',
+      message:socket.username+' 已连线.'
+    });
   });
   socket.on('disconnect',function(){
     if(addedUser){
@@ -49,6 +83,10 @@ io.on('connection',function(socket){
       socket.broadcast.emit('user left',{
         username:socket.username,
         numUsers:numUsers
+      });
+      socket.broadcast.emit('Message',{
+        username:'Auntie Dot',
+        message:socket.username+' 已离连线.'
       });
     }
   });
