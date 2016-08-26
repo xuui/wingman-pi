@@ -69,17 +69,17 @@ socket.on('terminal',function(data){
 /* Function */
 // Chat.function
 $inputName.keydown(function(e){ //input Name
-  if(e.which===13){setUsername();
-  $inputName.hide();}
+  if(e.which===13){setUsername();}
 });
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
 });
-$submitMsg.click(function(){sendMessage();});
+$submitMsg.on('click',function(){sendMessage();});
 function setUsername(){
   username=cleanInput($inputName.val().trim());
   if(username){socket.emit('add user',username);}
   console.log('$inputName='+username);
+  $inputName.hide();
 }
 function sendMessage(){
   var message=cleanInput($inputMessage.val().trim());
@@ -169,13 +169,13 @@ $('#upFiles').on('change',function(){
     var filename=files[i].name,reader=new FileReader();
     if(/audio\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<audio controls autoplay src="'+this.result+'" />');
+        $Previewer.html('<audio class="xu-img" controls autoplay src="'+this.result+'" />');
         socket.emit('previewer',{file:filename,type:'audio',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else if(/video\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
+        $Previewer.html('<video class="xu-img" controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
         socket.emit('previewer',{file:filename,type:'video',image:this.result});
         console.log('sent: '+filename);
       },false);

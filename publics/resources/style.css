@@ -26,7 +26,7 @@ input[type=text]:focus,.btn:focus{outline:none;}
 
 /* Messages */
 #messages{margin:0 10px;padding:78px 10px 50px;list-style:none;}
-#messages li{margin:0 0 15px;}
+#messages li{margin:0 0 15px;border-radius:2px;}
 #messages .message{position:relative;background:#001a30;background-color:rgba(20,88,105,.65);border:1px solid #165d70;margin:0 0 15px;text-align:left;text-shadow:0 1px 1px rgba(0,0,0,.34);}
 #messages .message .username,#messages .message time{position:absolute;top:0;font-family:'Agency FB';}
 #messages .message .username{display:block;/*inline-block*/
