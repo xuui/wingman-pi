@@ -1,15 +1,15 @@
 $(function(){
 'use strict';
+var FADE_TIME=150,
+    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a','#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 var username;
 var connected=false;
 var $inputName=$('#inputName'),
     $inputMessage=$('#inputMsg'),
     $submitMsg=$('#submitMsg'),
-    $messages=$('.messages'),
+    $messages=$('#messages'),
     $uNum=$('#uNum'),
     $Previewer=$('#previewer');
-var FADE_TIME=150,
-    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a','#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 
 /* Socket.io */
 var socket=io();
@@ -69,7 +69,8 @@ socket.on('terminal',function(data){
 /* Function */
 // Chat.function
 $inputName.keydown(function(e){ //input Name
-  if(e.which===13){setUsername();}
+  if(e.which===13){setUsername();
+  $inputName.hide();}
 });
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
@@ -92,17 +93,39 @@ function cleanInput(input){return $('<div/>').text(input).text();}
 function addParticipantsMessage(data){
   var message='';
   if (data.numUsers===1){
-    //message+="当前只有 1 个人在线";
     $uNum.text('No.1');
   }else{
-    //message+="当前有 "+data.numUsers+" 在线";
     $uNum.text('No.'+data.numUsers);
   }
   log(message);
 }
 function log(message,options){
-  var $el=$('<li>').addClass('log').text(message);
+  var $el=$('<li class="log">').text(message);
   addMessageElement($el,options);
+}
+function addChatMessage(data,options){
+  options=options||{};
+  var myDate = new Date();
+  var nowTime=myDate.getHours()+':'+myDate.getMinutes()+':'+myDate.getSeconds();
+  if(data.username=='Auntie Dot'){
+    //var $usernameDiv=$('<b>').text(data.username).css('color','#000');
+    var $usernameDiv='<cite class="username"><b>'+data.username+'</b></cite><time>'+nowTime+'</time>';
+  }else{
+    //var $usernameDiv=$('<span class="username"/>').text('['+data.username+']: ').css('color',getUsernameColor(data.username));
+    //var $usernameDiv='<cite class="username"><b style="color:'+getUsernameColor(data.username)+';">'+data.username+'</b></cite>';
+    var $usernameDiv='<cite class="username"><b>'+data.username+'</b></cite><time>'+nowTime+'</time>';
+  }
+  var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
+  if($messageUrl==0){
+    var $messageBodyDiv=$('<p class="msgbody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
+    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
+    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
+    
+  }else{
+    var $messageBodyDiv=$('<p class="msgbody">').text(data.message);
+  }
+  var $messageDiv=$('<li class="message"/>').data('username',data.username).append($usernameDiv,$messageBodyDiv);
+  addMessageElement($messageDiv,options);
 }
 function addMessageElement(el,options){
   var $el=$(el);
@@ -113,22 +136,7 @@ function addMessageElement(el,options){
   if(options.fade){$el.hide().fadeIn(FADE_TIME);}
   if(options.prepend){$messages.prepend($el);
   }else{$messages.append($el);}
-  $messages[0].scrollTop=$messages[0].scrollHeight;
-}
-function addChatMessage(data,options){
-  options=options||{};
-  var $usernameDiv=$('<span class="username"/>').text('['+data.username+']: ').css('color',getUsernameColor(data.username));
-  var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
-  if($messageUrl==0){
-    var $messageBodyDiv=$('<span class="messageBody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
-    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
-    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
-    
-  }else{
-    var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
-  }
-  var $messageDiv=$('<li class="message"/>').data('username',data.username).append($usernameDiv,$messageBodyDiv);
-  addMessageElement($messageDiv,options);
+  $('#msgArea').animate({scrollTop:$($messages).height()},300);
 }
 function getUsernameColor(username){
   var hash=7;
