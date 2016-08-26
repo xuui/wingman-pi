@@ -11,6 +11,9 @@ var $inputName=$('#inputName'),
     $uNum=$('#uNum'),
     $Previewer=$('#previewer');
 
+if(window.navigator.standalone){
+  $('[data-ui=page]').addClass('status'); 
+}
 /* Socket.io */
 var socket=io();
 //var socket=io.connect('http://dot.xuui.net');

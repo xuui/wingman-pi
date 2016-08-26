@@ -15,14 +15,17 @@ header b{display:inline-block;border-top:3px solid #fff;margin-top:-1px;padding:
 header span{float:right;display:inline-block;margin:0 10px;padding-top:7px;line-height:39px;font-size:17px;color:#7e908f;}
 
 [data-ui=page]{position:absolute;top:0;bottom:0;left:0;right:0;}
-[data-ui=page],[data-ui=page] section{height:100%;}
-[data-ui=page] section{overflow-y:auto;-webkit-overflow-scrolling:touch}
+[data-ui=page],[data-ui=page] section{width:100%;height:100%;}
+[data-ui=page].status{padding-top:20px;}
+[data-ui=page].status header{margin-top:25px;}
+[data-ui=page] section{overflow:auto;-webkit-overflow-scrolling:touch}
 input[type=text],.sendbox .input{background:rgba(16,47,55,.86);border:1px solid rgba(26,100,112,.78);padding:5px;color:#b4d4d9;font-family:inherit;}
 input[type=text]:focus,.btn:focus{outline:none;}
 
 .sendbox{padding:12px 25px 12px 15px;}
 .sendbox .input{padding:8px 45px 8px 8px;width:100%;line-height:20px;font-size:16px;border-radius:3px;}
 .sendbox .btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
+#upFiles{width:240px;}
 
 /* Messages */
 #messages{margin:0 10px;padding:78px 10px 50px;list-style:none;}
