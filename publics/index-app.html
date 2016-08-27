@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Xuui Template"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wingman Pi"/>
+<meta name="theme-color" content="#343">
 <meta name="renderer" content="webkit">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -40,16 +41,13 @@ cat /proc/cpuinfo // 查看 CPU 信息
     <span id="uNum">No.0</span>
     <b>Auntie Dot</b>
   </header>
-  <section>
-    <div>
-      <p><input type="text" id="inputName" placeholder="请输入名字"></p>
-      <div id="chatlog">
-        <div></div>
-        <ul class="messages"></ul>
-      </div>
-    </div>
-    <p><input type="file" name="upFiles" id="upFiles" accept=".png,.jpg,.jpeg,.gif,.mp3,.mp4"></p>
-    <div id="previewer"></div>
+  <section id="msgArea">
+    <ul id="messages">
+      <li><input type="text" id="inputName" placeholder="请输入名字"></li>
+      <li><input type="file" name="upFiles" id="upFiles" accept=".png,.jpg,.jpeg,.gif,.mp3,.mp4"></li>
+      <li id="previewer"></li>
+      <!--li class="message"><cite class="username"><b>dfgfd</b></cite><time>00:00:00</time><p class="msgbody">dfg</p></li-->
+    </ul>
   </section>
   <footer class="sendbox">
     <input type="text" class="input" id="inputMsg" placeholder="说点什么吧">

@@ -1,16 +1,19 @@
 $(function(){
 'use strict';
+var FADE_TIME=150,
+    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a','#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 var username;
 var connected=false;
 var $inputName=$('#inputName'),
     $inputMessage=$('#inputMsg'),
     $submitMsg=$('#submitMsg'),
-    $messages=$('.messages'),
+    $messages=$('#messages'),
     $uNum=$('#uNum'),
     $Previewer=$('#previewer');
-var FADE_TIME=150,
-    COLORS=['#e53935','#d81b60','#8e24aa','#5e35b1','#3f51b5','#1976d2','#0288d1','#00838f','#388e3c','#558b2f','#ff6f00','#e65100','#f4511e','#546e7a','#e21400','#91580f','#f8a700','#f78b00','#58dc00','#287b00','#a8f07a','#4ae8c4','#3b88eb','#3824aa','#a700ff','#d300e7'];
 
+if(window.navigator.standalone){
+  $('[data-ui=page]').addClass('status'); 
+}
 /* Socket.io */
 //var socket=io();
 var socket=io.connect('http://dot.xuui.net');
@@ -46,11 +49,11 @@ socket.on('user left',function(data){
 socket.on('previewer',function(data){
   console.log('receive: '+data.file+data.type);
   if(data.type=='audio'){
-    $Previewer.html('<audio controls autoplay src="'+data.image+'" />');
+    $Previewer.html('<div clas="message"><audio controls autoplay src="'+data.image+'" /></div>');
   }else if(data.type=='video'){
-    $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+data.image+'"></video>');
+    $Previewer.html('<div clas="message"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div>');
   }else{
-    $Previewer.html('<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>');
+    $Previewer.html('<div clas="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
   }
 });
 // Previewer.io End
@@ -59,8 +62,8 @@ socket.on('previewer',function(data){
 socket.emit('terminal',{shell:'uptime'});
 socket.on('terminal',function(data){
   console.log(data.out);
-  $Previewer.html('<p>'+data.out+'</p>');
-  var notinfo=data.out.split(', ')
+  $Previewer.html('<div class="message"><cite class="username"><b>Dot</b></cite><p class="msgbody">'+data.out+'</p></div>');
+  var notinfo=data.out.split(', ');
   send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
 // Terminal.io End
@@ -74,11 +77,12 @@ $inputName.keydown(function(e){ //input Name
 $inputMessage.keydown(function(e){// input Message
   if(e.which===13){sendMessage();}
 });
-$submitMsg.click(function(){sendMessage();});
+$submitMsg.on('click',function(){sendMessage();});
 function setUsername(){
   username=cleanInput($inputName.val().trim());
   if(username){socket.emit('add user',username);}
   console.log('$inputName='+username);
+  $inputName.hide();
 }
 function sendMessage(){
   var message=cleanInput($inputMessage.val().trim());
@@ -92,17 +96,39 @@ function cleanInput(input){return $('<div/>').text(input).text();}
 function addParticipantsMessage(data){
   var message='';
   if (data.numUsers===1){
-    //message+="当前只有 1 个人在线";
     $uNum.text('No.1');
   }else{
-    //message+="当前有 "+data.numUsers+" 在线";
     $uNum.text('No.'+data.numUsers);
   }
   log(message);
 }
 function log(message,options){
-  var $el=$('<li>').addClass('log').text(message);
+  var $el=$('<li class="log">').text(message);
   addMessageElement($el,options);
+}
+function addChatMessage(data,options){
+  options=options||{};
+  var myDate = new Date();
+  var nowTime=myDate.getHours()+':'+myDate.getMinutes()+':'+myDate.getSeconds();
+  if(data.username=='Auntie Dot'){
+    //var $usernameDiv=$('<b>').text(data.username).css('color','#000');
+    var $usernameDiv='<cite class="username"><b>'+data.username+'</b></cite><time>'+nowTime+'</time>';
+  }else{
+    //var $usernameDiv=$('<span class="username"/>').text('['+data.username+']: ').css('color',getUsernameColor(data.username));
+    //var $usernameDiv='<cite class="username"><b style="color:'+getUsernameColor(data.username)+';">'+data.username+'</b></cite>';
+    var $usernameDiv='<cite class="username"><b>'+data.username+'</b></cite><time>'+nowTime+'</time>';
+  }
+  var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
+  if($messageUrl==0){
+    var $messageBodyDiv=$('<p class="msgbody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
+    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
+    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
+    
+  }else{
+    var $messageBodyDiv=$('<p class="msgbody">').text(data.message);
+  }
+  var $messageDiv=$('<li class="message"/>').data('username',data.username).append($usernameDiv,$messageBodyDiv);
+  addMessageElement($messageDiv,options);
 }
 function addMessageElement(el,options){
   var $el=$(el);
@@ -113,22 +139,7 @@ function addMessageElement(el,options){
   if(options.fade){$el.hide().fadeIn(FADE_TIME);}
   if(options.prepend){$messages.prepend($el);
   }else{$messages.append($el);}
-  $messages[0].scrollTop=$messages[0].scrollHeight;
-}
-function addChatMessage(data,options){
-  options=options||{};
-  var $usernameDiv=$('<span class="username"/>').text('['+data.username+']: ').css('color',getUsernameColor(data.username));
-  var $messageUrl=data.message.search("((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?");
-  if($messageUrl==0){
-    var $messageBodyDiv=$('<span class="messageBody">').html('<a href="'+data.message+'" target="_blank">'+data.message+'</a>');
-    //var $messageBodyDiv=$('<span class="messageBody">').html('<img src="'+data.message+'">');
-    //((http|ftp|https))(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*([a-zA-Z0-9\&%_\./-~-]*)?
-    
-  }else{
-    var $messageBodyDiv=$('<span class="messageBody">').text(data.message);
-  }
-  var $messageDiv=$('<li class="message"/>').data('username',data.username).append($usernameDiv,$messageBodyDiv);
-  addMessageElement($messageDiv,options);
+  $('#msgArea').animate({scrollTop:$($messages).height()},300);
 }
 function getUsernameColor(username){
   var hash=7;
@@ -161,13 +172,13 @@ $('#upFiles').on('change',function(){
     var filename=files[i].name,reader=new FileReader();
     if(/audio\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<audio controls autoplay src="'+this.result+'" />');
+        $Previewer.html('<audio class="xu-img" controls autoplay src="'+this.result+'" />');
         socket.emit('previewer',{file:filename,type:'audio',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else if(/video\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
+        $Previewer.html('<video class="xu-img" controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
         socket.emit('previewer',{file:filename,type:'video',image:this.result});
         console.log('sent: '+filename);
       },false);

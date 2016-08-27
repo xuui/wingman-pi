@@ -49,11 +49,11 @@ socket.on('user left',function(data){
 socket.on('previewer',function(data){
   console.log('receive: '+data.file+data.type);
   if(data.type=='audio'){
-    $Previewer.html('<audio controls autoplay src="'+data.image+'" />');
+    $Previewer.html('<div clas="message"><audio controls autoplay src="'+data.image+'" /></div>');
   }else if(data.type=='video'){
-    $Previewer.html('<video controls autoplay><source type="video/mp4" src="'+data.image+'"></video>');
+    $Previewer.html('<div clas="message"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div>');
   }else{
-    $Previewer.html('<img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/>');
+    $Previewer.html('<div clas="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
   }
 });
 // Previewer.io End
@@ -62,7 +62,8 @@ socket.on('previewer',function(data){
 socket.emit('terminal',{shell:'uptime'});
 socket.on('terminal',function(data){
   console.log(data.out);
-  $Previewer.html('<p>'+data.out+'</p>');
+  //$Previewer.html('<p>'+data.out+'</p>');
+  $Previewer.html('<div class="message"><cite class="username"><b>Auntie Dot</b></cite><p class="msgbody">'+data.out+'</p></div>');
   var notinfo=data.out.split(', ')
   send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
