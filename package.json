@@ -20,9 +20,13 @@
     "url": "https://github.com/xuui/wingman-pi/issues"
   },
   "homepage": "https://github.com/xuui/wingman-pi#readme",
+  "engines": {
+    "node": ">= 7.0.0"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "pi-gpio": "0.0.8",
-    "socket.io": "^1.4.8"
+    "rpi-gpio": "0.0.1",
+    "socket.io": "^1.7.1"
   }
 }
