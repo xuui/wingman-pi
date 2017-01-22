@@ -162,8 +162,8 @@ $('#upFiles').on('change',function(){
   $Previewer.html('');
   for(var i=0,l=files.length;i<l;i++){
     console.log(files[i].name+': '+files[i].type+' '+files[i].size/1000+'KB');
-    if(files[i].size/1024 >5120){
-      $Previewer.html('文件不能大于 5M');
+    if(files[i].size/1024 >2048){
+      $Previewer.html('文件不能大于 2M');
       return false;
     }
     if(!/image|audio|video\/\w+/.test(files[i].type)){
