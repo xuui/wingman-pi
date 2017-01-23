@@ -58,6 +58,7 @@ socket.on('previewer',function(data){
     //$Previewer.html('<div class="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
     $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div></li>');
   }
+  $('#msgArea').animate({scrollTop:$($messages).height()},240);
 });
 // Previewer.io End
 
