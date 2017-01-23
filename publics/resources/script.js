@@ -49,11 +49,14 @@ socket.on('user left',function(data){
 socket.on('previewer',function(data){
   console.log('receive: '+data.file+data.type);
   if(data.type=='audio'){
-    $Previewer.html('<div clas="message"><audio controls autoplay src="'+data.image+'" /></div>');
+    //$Previewer.html('<div class="message"><audio controls autoplay src="'+data.image+'" /></div>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><audio controls autoplay src="'+data.image+'" /></div></li>');
   }else if(data.type=='video'){
-    $Previewer.html('<div clas="message"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div>');
+    //$Previewer.html('<div class="message"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div></li>');
   }else{
-    $Previewer.html('<div clas="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
+    //$Previewer.html('<div class="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div></li>');
   }
 });
 // Previewer.io End
@@ -63,7 +66,8 @@ socket.emit('terminal',{shell:'uptime'});
 socket.on('terminal',function(data){
   console.log(data.out);
   //$Previewer.html('<p>'+data.out+'</p>');
-  $Previewer.html('<div class="message"><cite class="username"><b>Auntie Dot</b></cite><p class="msgbody">'+data.out+'</p></div>');
+  //$Previewer.html('<div class="message"><cite class="username"><b>Auntie Dot</b></cite><p class="msgbody">'+data.out+'</p></div>');
+  $messages.append('<li class="message"><cite class="username"><b>Auntie Dot</b></cite><p class="msgbody">'+data.out+'</p></li>');
   var notinfo=data.out.split(', ')
   send_notify('当前时间'+notinfo[0].replace(/days/g,"天。").replace(/up/g,"，已运行"));
 });
@@ -140,7 +144,7 @@ function addMessageElement(el,options){
   if(options.fade){$el.hide().fadeIn(FADE_TIME);}
   if(options.prepend){$messages.prepend($el);
   }else{$messages.append($el);}
-  $('#msgArea').animate({scrollTop:$($messages).height()},300);
+  $('#msgArea').animate({scrollTop:$($messages).height()},240);
 }
 function getUsernameColor(username){
   var hash=7;
@@ -173,25 +177,29 @@ $('#upFiles').on('change',function(){
     var filename=files[i].name,reader=new FileReader();
     if(/audio\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<audio class="xu-img" controls autoplay src="'+this.result+'" />');
+        //$Previewer.html('<audio class="xu-img" controls autoplay src="'+this.result+'" />');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><audio controls autoplay src="'+this.result+'" /></div></li>');
         socket.emit('previewer',{file:filename,type:'audio',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else if(/video\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
-        $Previewer.html('<video class="xu-img" controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
+        //$Previewer.html('<video class="xu-img" controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><video controls autoplay><source type="video/mp4" src="'+this.result+'"></video></div></li>');
         socket.emit('previewer',{file:filename,type:'video',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else{
       reader.addEventListener("load",function(e){
-        $Previewer.html('<img class="xu-img" src="'+this.result+'" alt=""/>');
+        //$Previewer.html('<img class="xu-img" src="'+this.result+'" alt=""/>');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><img class="xu-img" src="'+this.result+'" alt=""/></div></li>');
         socket.emit('previewer',{file:filename,type:'image',image:this.result});
         console.log('sent: '+filename);
       },false);
     }
     if(files[i]){reader.readAsDataURL(files[i]);}
   }
+  $('#msgArea').animate({scrollTop:$($messages).height()},240);
 });
 }
 // Previewer.function End
