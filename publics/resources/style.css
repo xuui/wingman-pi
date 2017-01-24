@@ -24,8 +24,10 @@ input[type=text]:focus,.btn:focus{outline:none;}
 
 .sendbox{padding:12px 25px 12px 15px;}
 .sendbox .input{padding:8px 45px 8px 8px;width:100%;line-height:20px;font-size:16px;border-radius:3px;}
-.sendbox .btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
-#upFiles{width:240px;}
+.sendbox #submitMsg.btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
+#upFiles{display:none;}
+#selFiles{position:absolute;right:80px;background:transparent;border:1px solid transparent;margin:1px; width:36px;height:36px;line-height:36px;color:#7e908f;font-size:17px;}
+#selFiles img{vertical-align:middle;}
 
 /* Messages */
 #messages{margin:0 10px;padding:78px 5px 50px;list-style:none;}
@@ -39,6 +41,7 @@ font-size:15px;color:#e0fef9;font-style:normal;}
 #messages .message .username b{display:inline-block;border-top:2px solid #29d9d2;padding:0 10px;font-weight:300;}
 #messages .message time{position:absolute;top:0;right:0;padding:5px 6px 0;color:#618d93;font-size:12px;line-height:1;}
 #messages .message .msgbody{display:block;color:#e2fff7;margin:0;padding:30px 10px 10px;}
+#messages .message .imgbody{display:block;color:#e2fff7;margin:0;padding:24px 3px 3px;}
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-device-pixel-ratio:3){
 body{background-size:40px 40px;}

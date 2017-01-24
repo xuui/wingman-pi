@@ -50,13 +50,13 @@ socket.on('previewer',function(data){
   console.log('receive: '+data.file+data.type);
   if(data.type=='audio'){
     //$Previewer.html('<div class="message"><audio controls autoplay src="'+data.image+'" /></div>');
-    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><audio controls autoplay src="'+data.image+'" /></div></li>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><audio controls autoplay src="'+data.image+'" /></div></li>');
   }else if(data.type=='video'){
     //$Previewer.html('<div class="message"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div>');
-    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div></li>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><video controls autoplay><source type="video/mp4" src="'+data.image+'"></video></div></li>');
   }else{
     //$Previewer.html('<div class="message"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div>');
-    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div></li>');
+    $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><img class="xu-img" src="'+data.image+'" alt="'+data.file+'"/></div></li>');
   }
   $('#msgArea').animate({scrollTop:$($messages).height()},240);
 });
@@ -160,8 +160,11 @@ function getUsernameColor(username){
 // Previewer.function
 if(typeof(FileReader)==='undefined'){
   result.html('抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！');
-  $('#upFiles').hide();
+  $('#selFiles').hide();
 }else{
+$('#selFiles').click(function(){
+  return $('#upFiles').click();
+});
 $('#upFiles').on('change',function(){
   var files=this.files;
   $Previewer.html('');
@@ -179,21 +182,21 @@ $('#upFiles').on('change',function(){
     if(/audio\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
         //$Previewer.html('<audio class="xu-img" controls autoplay src="'+this.result+'" />');
-        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><audio controls autoplay src="'+this.result+'" /></div></li>');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><audio controls autoplay src="'+this.result+'" /></div></li>');
         socket.emit('previewer',{file:filename,type:'audio',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else if(/video\/\w+/.test(files[i].type)){
       reader.addEventListener("load",function(e){
         //$Previewer.html('<video class="xu-img" controls autoplay><source type="video/mp4" src="'+this.result+'"></video>');
-        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><video controls autoplay><source type="video/mp4" src="'+this.result+'"></video></div></li>');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><video controls autoplay><source type="video/mp4" src="'+this.result+'"></video></div></li>');
         socket.emit('previewer',{file:filename,type:'video',image:this.result});
         console.log('sent: '+filename);
       },false);
     }else{
       reader.addEventListener("load",function(e){
         //$Previewer.html('<img class="xu-img" src="'+this.result+'" alt=""/>');
-        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="msgbody"><img class="xu-img" src="'+this.result+'" alt=""/></div></li>');
+        $messages.append('<li class="message"><cite class="username"><b>Dot Preview</b></cite><div class="imgbody"><img class="xu-img" src="'+this.result+'" alt=""/></div></li>');
         socket.emit('previewer',{file:filename,type:'image',image:this.result});
         console.log('sent: '+filename);
       },false);
