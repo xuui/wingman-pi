@@ -36,7 +36,6 @@ io.on('connection',function(socket){
     }else{
       commandLine=data.slice(1);
       console.log('CommandLine:['+commandLine+']');
-      var childOut='';
       child=exec(commandLine,function(error,stdout,stderr){
         console.log(stdout);
         socket.emit('Message',{
