@@ -16,6 +16,7 @@ app.use(express.static(__dirname+'/publics'));
 /* Socket.io */
 var usernames={};
 var numUsers=0;
+var commandLine='';
 io.on('connection',function(socket){
   /*
   socket.emit('news',{hello:'world'});
@@ -27,36 +28,24 @@ io.on('connection',function(socket){
 // Chat.io
   var addedUser=false;
   socket.on('Message',function(data){
-    socket.broadcast.emit('Message',{username:socket.username,message:data});
     //...
-    //console.log(data);
-    //var cmdText,cmdLog="";
-    //cmdText=data.split("wger:"); //拆分命令行
-    //console.log(cmdText);
-    //var exec=require('child_process').exec,child; //执行命令
-    //child=exec('wget '+cmdText,function(error,stdout,stderr){
-    //  console.log(stdout);
-    //  if(error!==null){console.log(error);}//console.log(stderr);
-    //});
-    /*var scmdLine=data.split("cmd:");
-    if(scmdLine[1]){
-      //console.log('Line:'+scmdLine[1]);
+    //console.log(data.match('\:'));
+    var cmdLine=data.match('\:');//拆分命令行 :cmd
+    if(cmdLine==null){
+      socket.broadcast.emit('Message',{username:socket.username,message:data});
+    }else{
+      commandLine=data.slice(1);
+      console.log('CommandLine:['+commandLine+']');
       var childOut='';
-      child=exec(scmdLine,function(error,stdout,stderr){
+      child=exec(commandLine,function(error,stdout,stderr){
         console.log(stdout);
-        socket.broadcast.emit('typing',{
+        socket.emit('Message',{
           username:'Dot',
           message:stdout
         });
         if(error!==null){console.log(error);}
       });
-      
-    }else{
-      socket.broadcast.emit('new message',{
-        username:socket.username,
-        message:data
-      });
-    }*/
+    }
     //...
   });
   socket.on('add user',function(username){
