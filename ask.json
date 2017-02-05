@@ -1,0 +1,20 @@
+//ask & reply json.
+{"dot":[
+  {
+    "ask":"128",
+    "reply":[
+      {"image","png"}]
+  },{
+    "ask":"144",
+    "reply":"image"
+  },{
+    "ask":"152",
+    "reply":"png"
+  },{
+    "ask":"dot?",
+    "reply":"why?"
+  },{
+    "ask":"?",
+    "reply":"!"
+  }
+]}
