@@ -24,11 +24,11 @@ header span{float:right;display:inline-block;margin:0 10px;padding-top:7px;line-
 input[type=text],.sendbox .input{background:rgba(16,47,55,.86);border:1px solid rgba(26,100,112,.78);padding:5px;color:#b4d4d9;font-family:inherit;}
 input[type=text]:focus,.btn:focus{outline:none;}
 
-.sendbox{padding:12px 25px 12px 15px;}
-.sendbox .input{padding:8px 45px 8px 8px;width:100%;line-height:20px;font-size:16px;border-radius:3px;}
+.sendbox{padding:12px 15px 4px;}
+.sendbox .input{padding:8px 45px 8px 8px;width:100%;line-height:24px;font-size:16px;border-radius:3px;}
 .sendbox #submitMsg.btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
 #upFiles{display:none;}
-#selFiles{position:absolute;top:12px;right:80px;background:transparent;border:1px solid transparent;margin:1px;width:36px;height:36px;line-height:35px;color:#a9c2c1;}
+#selFiles{position:absolute;top:14px;right:76px;background:transparent;border:1px solid transparent;margin:1px;padding:0;width:36px;height:36px;line-height:35px;color:#a9c2c1;}
 #selFiles img{vertical-align:middle;}
 
 /* Messages */
