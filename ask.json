@@ -1,9 +1,10 @@
-//ask & reply json.
 {"dot":[
   {
     "ask":"128",
     "reply":[
-      {"image","png"}]
+      "image",
+      "png"
+    ]
   },{
     "ask":"144",
     "reply":"image"
