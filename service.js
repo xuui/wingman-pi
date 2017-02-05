@@ -38,10 +38,7 @@ io.on('connection',function(socket){
       console.log('CommandLine:['+commandLine+']');
       child=exec(commandLine,function(error,stdout,stderr){
         console.log(stdout);
-        socket.emit('Message',{
-          username:'Dot',
-          message:stdout
-        });
+        socket.emit('terminal',{out:stdout});
         if(error!==null){console.log(error);}
       });
     }
