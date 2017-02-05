@@ -112,3 +112,15 @@ var ask = JSON.parse(fs.readFileSync('ask.json', 'utf8'));
 console.log('ask num:'+ ask.dot.length);
 console.log('ask data:');
 console.log(ask.dot);
+
+function askData(Q){
+  for(var i=0;i<ask.dot.length;i++){
+    //console.log('for-'+i);
+    if(ask.dot[i].ask==Q){
+      console.log(i+' reply:'+ ask.dot[i].reply);
+      console.log(i+' reply.l:'+ ask.dot[i].reply.length);
+      break;
+    }
+  }
+}
+askData('128');
