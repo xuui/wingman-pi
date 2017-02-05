@@ -24,8 +24,8 @@ header span{float:right;display:inline-block;margin:0 10px;padding-top:7px;line-
 input[type=text],.sendbox .input{background:rgba(16,47,55,.86);border:1px solid rgba(26,100,112,.78);padding:5px;color:#b4d4d9;font-family:inherit;}
 input[type=text]:focus,.btn:focus{outline:none;}
 
-.sendbox{padding:12px 15px 4px;}
-.sendbox .input{padding:8px 45px 8px 8px;width:100%;line-height:24px;font-size:16px;border-radius:3px;}
+.sendbox{padding:12px 4px 4px;}
+.sendbox .input{padding:8px 112px 8px 8px;width:100%;line-height:24px;font-size:16px;border-radius:3px;}
 .sendbox #submitMsg.btn{position:absolute;right:0;bottom:0;z-index:11;background:transparent url(dot-send.png) no-repeat 100% 100%;background-size:72px 75px;border:none;width:72px;height:75px;}
 #upFiles{display:none;}
 #selFiles{position:absolute;top:14px;right:76px;background:transparent;border:1px solid transparent;margin:1px;padding:0;width:36px;height:36px;line-height:35px;color:#a9c2c1;}
@@ -42,8 +42,9 @@ font-size:15px;color:#e0fef9;font-style:normal;}
 #messages .message .username::after{display:inline-block;position:absolute;background:url(unametir.png) no-repeat 100% 0%;background-size:15px 24px;margin-left:15px;width:15px;height:24px;content:'';}
 #messages .message .username b{display:inline-block;border-top:2px solid #29d9d2;padding:0 10px;font-weight:300;}
 #messages .message time{position:absolute;top:0;right:0;padding:5px 6px 0;color:#618d93;font-size:12px;line-height:1;}
-#messages .message .msgbody{display:block;color:#e2fff7;margin:0;padding:30px 10px 10px;}
+#messages .message .msgbody{display:block;color:#e2fff7;margin:0;padding:30px 12px 8px;}
 #messages .message .imgbody{display:block;color:#e2fff7;margin:0;padding:24px 3px 3px;}
+#messages .message pre{font-family:'Agency FB';font-size:13px;}
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-device-pixel-ratio:3){
 body{background-size:40px 40px;}
