@@ -108,5 +108,7 @@ gpio.open(16,'output',function(err){     // Open pin 16 for output
 /* GPIO.io End */
 
 var fs = require('fs');
-var askdata = JSON.parse(fs.readFileSync('ask.json', 'utf8'));
-console.log(askdata.dot);
+var ask = JSON.parse(fs.readFileSync('ask.json', 'utf8'));
+console.log('ask num:'+ ask.dot.length);
+console.log('ask data:');
+console.log(ask.dot);
