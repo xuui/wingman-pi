@@ -3,7 +3,8 @@
     "ask":"128",
     "reply":[
       "image",
-      "png"
+      "png",
+      "jpg"
     ]
   },{
     "ask":"144",

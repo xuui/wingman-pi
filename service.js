@@ -30,11 +30,15 @@ io.on('connection',function(socket){
     }else{
       commandLine=data.slice(1);
       console.log('CommandLine:['+commandLine+']');
+
+      socket.emit('terminal',{out:askData(commandLine)});
+      /*
       child=exec(commandLine,function(error,stdout,stderr){
         console.log(stdout);
         socket.emit('terminal',{out:stdout});
         if(error!==null){console.log(error);}
       });
+      */
     }
     //...
   });
@@ -108,13 +112,20 @@ console.log('ask data:');
 console.log(ask.dot);
 
 function askData(Q){
+  var askReply;
   for(var i=0;i<ask.dot.length;i++){
     //console.log('for-'+i);
     if(ask.dot[i].ask==Q){
-      console.log(i+' reply:'+ ask.dot[i].reply);
-      console.log(i+' reply.l:'+ ask.dot[i].reply.length);
+      askReply=ask.dot[i].reply;
       break;
     }
   }
+  if(typeof(askReply)=='object'){
+    var ni=Math.round(Math.random()*(askReply.length-1));
+    console.log('ni:'+ni);
+    console.log(askReply[ni]);
+    return askReply[ni];
+  }else{
+    return askReply;
+  }
 }
-askData('128');
