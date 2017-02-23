@@ -24,7 +24,7 @@ io.on('connection',function(socket){
   socket.on('Message',function(data){
     //...
     //console.log(data.match('\:'));
-    var cmdLine=data.match('\:');//拆分命令行 :cmd
+    var cmdLine=data.match('^:');//拆分命令行 :cmd
     if(cmdLine==null){
       socket.broadcast.emit('Message',{username:socket.username,message:data});
     }else{
