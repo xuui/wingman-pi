@@ -1,5 +1,12 @@
 {"dot":[
   {
+    "ask":"welcome",
+    "reply":[
+      "侦测到跃迁空间信号！",
+      "png！",
+      "jpg！"
+    ]
+  },{
     "ask":"128",
     "reply":[
       "image",

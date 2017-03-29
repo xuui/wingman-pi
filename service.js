@@ -56,7 +56,8 @@ io.on('connection',function(socket){
     });
     socket.broadcast.emit('Message',{
       username:'Auntie Dot',
-      message:socket.username+' 已连线.'
+      //message:socket.username+' 已连线.'
+      message:askData('welcome')
     });
   });
   socket.on('disconnect',function(){
