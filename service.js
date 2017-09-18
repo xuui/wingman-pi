@@ -30,7 +30,6 @@ io.on('connection',function(socket){
     }else{
       commandLine=data.slice(1);
       console.log('CommandLine:['+commandLine+']');
-
       socket.emit('terminal',{out:askData(commandLine)});
       /*
       child=exec(commandLine,function(error,stdout,stderr){
@@ -106,11 +105,11 @@ gpio.open(16,'output',function(err){     // Open pin 16 for output
 });
 /* GPIO.io End */
 
-var fs = require('fs');
-var ask = JSON.parse(fs.readFileSync('ask.json', 'utf8'));
-console.log('ask num:'+ ask.dot.length);
-console.log('ask data:');
-console.log(ask.dot);
+var fs=require('fs');
+var ask=JSON.parse(fs.readFileSync('ask.json','utf8'));
+//console.log('ask num:'+ ask.dot.length);
+//console.log('ask data:');
+//console.log(ask.dot);
 
 function askData(Q){
   var askReply;
