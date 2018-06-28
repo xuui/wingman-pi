@@ -8,12 +8,13 @@
 
 直接运行：
 ```
-$ npm install
+$ npm i
 $ node .
 ```
 或者：
 ```
-$ npm install socket.io
+$ npm i --save socket.io
+$ npm i --save-dev express
 $ node service.js
 ```
 
