@@ -9,7 +9,7 @@
 直接运行：
 ```
 $ npm i
-$ node .
+$ npm start
 ```
 或者：
 ```
